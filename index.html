@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rio Anime Shop — Catálogo</title>
+
+  <!-- Fonte estilo "anime friendly" e legível -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#0b1a24;
+      --bg2:#1c2f4a;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.12);
+      --txt: #eaf4ef;
+      --muted: rgba(234,244,239,.75);
+      --shadow: 0 18px 40px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+
+    /* ===== FIX BASE (evita vazamento lateral) ===== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html, body{ max-width:100%; overflow-x:hidden; }
+    img, svg, video, canvas{ max-width:100%; height:auto; display:block; }
+
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+      min-height:100vh;
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(255,0,120,.18), transparent 60%),
+                  radial-gradient(900px 550px at 80% 20%, rgba(0,180,255,.16), transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* grãozinho leve (bem discreto) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      opacity:.12;
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 16px 96px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:center;
+      margin-top: 8px;
+    }
+
+    .brand{
+      width: min(540px, 100%);
+      text-align:center;
+      padding: 18px 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      max-width:100%;
+
+      /* ✅ FIX: garante alinhamento perfeito do conteúdo */
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .logo{
+      width: min(240px, 58vw);
+      height:auto;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.18);
+
+      /* ✅ FIX: centraliza a imagem mesmo sendo display:block */
+      margin: 0 auto;
+    }
+
+    .title{
+      margin: 12px 0 0;
+      font-family: "Baloo 2", system-ui, sans-serif;
+      font-weight: 700;
+      letter-spacing: .4px;
+      font-size: clamp(22px, 4.4vw, 34px);
+      text-shadow: 0 8px 26px rgba(0,0,0,.35);
+    }
+
+    .subtitle{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .hint{
+      margin: 18px 0 12px;
+      text-align:center;
+      font-family: "Baloo 2", system-ui, sans-serif;
+      font-size: 18px;
+      letter-spacing:.3px;
+    }
+
+    .grid{
+      display:grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+      margin-top: 10px;
+    }
+
+    /* no desktop, vira 2 colunas automaticamente */
+    @media (min-width: 760px){
+      .grid{ grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+
+    .card{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 16px 16px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      text-decoration:none;
+      color: var(--txt);
+      transform: translateY(0);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 74px;
+      overflow:hidden;
+      max-width:100%;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 200px at 10% 0%, rgba(255,255,255,.18), transparent 60%);
+      opacity:.55;
+      pointer-events:none;
+    }
+
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.32);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      z-index:1;
+      min-width:0;
+    }
+
+    .icon{
+      width: 44px;
+      height: 44px;
+      display:grid;
+      place-items:center;
+      border-radius: 16px;
+      background: var(--glass2);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+      font-size: 22px;
+      flex:0 0 auto;
+    }
+
+    .label{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      min-width:0;
+    }
+
+    .name{
+      font-family: "Baloo 2", system-ui, sans-serif;
+      font-size: 18px;
+      letter-spacing:.2px;
+      line-height: 1.1;
+      overflow-wrap:anywhere;
+    }
+
+    .desc{
+      font-size: 12.5px;
+      color: var(--muted);
+      overflow-wrap:anywhere;
+    }
+
+    .arrow{
+      z-index:1;
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      display:grid;
+      place-items:center;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 18px;
+      flex:0 0 auto;
+    }
+
+    /* “tintas” por categoria (sem exagero) */
+    .c-shirts { outline: 2px solid rgba(0,180,255,.18); }
+    .c-fig    { outline: 2px solid rgba(255,90,0,.18); }
+    .c-funko  { outline: 2px solid rgba(170,90,255,.18); }
+    .c-copos  { outline: 2px solid rgba(0,220,170,.18); }
+    .c-can    { outline: 2px solid rgba(255,210,0,.18); }
+
+    .pill{
+      display:inline-flex;
+      gap: 8px;
+      align-items:center;
+      justify-content:center;
+      margin: 18px auto 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 12.5px;
+      width: fit-content;
+    }
+
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(234,244,239,.55);
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <section class="brand">
+        <img class="logo" src="logo.png" alt="Rio Anime Shop" />
+        <h1 class="title">Rio Anime Shop</h1>
+        <p class="subtitle">Catálogo rápido • Clique e fale no WhatsApp</p>
+      </section>
+    </div>
+
+    <div class="hint">O que você procura?</div>
+
+    <section class="grid" id="menuGrid">
+      <!-- Os botões são gerados pelo JS abaixo -->
+    </section>
+
+    <div class="pill">✨ Dica: toque no item e veja fotos + preço</div>
+
+    <footer>© Rio Anime Shop</footer>
+  </main>
+
+  <script>
+    // Categorias do menu
+    const categories = [
+      { key: "camisas",       name: "Camisas",        desc: "Estampas e coleções",   icon: "🎽", className:"c-shirts" },
+      { key: "actionfigure",  name: "Action Figure",  desc: "Colecionáveis",        icon: "🤖", className:"c-fig"    },
+      { key: "funkopop",      name: "Funko Pop",      desc: "Pop vibes!",           icon: "⭐", className:"c-funko"  },
+      { key: "copos",         name: "Copos",          desc: "Para o dia a dia",     icon: "🥤", className:"c-copos"  },
+      { key: "canecas",       name: "Canecas",        desc: "Café com estilo",      icon: "☕", className:"c-can"    },
+    ];
+
+    // Para onde o botão leva?
+    const CATALOG_PAGE = "catalogo.html";
+    const grid = document.getElementById("menuGrid");
+
+    categories.forEach(c => {
+      const a = document.createElement("a");
+      a.className = `card ${c.className}`;
+      a.href = `${CATALOG_PAGE}?cat=${encodeURIComponent(c.key)}`;
+      a.innerHTML = `
+        <div class="left">
+          <div class="icon">${c.icon}</div>
+          <div class="label">
+            <div class="name">${c.name}</div>
+            <div class="desc">${c.desc}</div>
+          </div>
+        </div>
+        <div class="arrow">➜</div>
+      `;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+</html>
