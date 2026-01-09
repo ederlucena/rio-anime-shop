@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rio Anime Shop — Produto</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#0b1a24;
+      --bg2:#1c2f4a;
+      --txt: #eaf4ef;
+      --muted: rgba(234,244,239,.75);
+      --radius: 22px;
+    }
+
+    /* ===== FIX BASE (evita vazamento lateral) ===== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html, body{ max-width:100%; overflow-x:hidden; }
+    img, svg, video, canvas{ max-width:100%; height:auto; display:block; }
+    input, button, select, textarea{ max-width:100%; }
+
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+      min-height:100vh;
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(255,0,120,.18), transparent 60%),
+                  radial-gradient(900px 550px at 80% 20%, rgba(0,180,255,.16), transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2), var(--bg1));
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      opacity:.12;
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{ max-width: 1100px; margin: 0 auto; padding: 18px 16px 110px; }
+
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap: 12px;
+      padding: 14px 14px; border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+      max-width:100%;
+    }
+
+    .brandLeft{ display:flex; align-items:center; gap: 12px; min-width: 0; }
+    .logoSmall{
+      width: 46px; height: 46px; border-radius: 14px; object-fit: cover;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 22px rgba(0,0,0,.28);
+      flex: 0 0 auto;
+    }
+    .title{ margin:0; font-family:"Baloo 2", system-ui, sans-serif; font-size: 20px; line-height: 1.1; }
+    .subtitle{ margin: 2px 0 0; color: var(--muted); font-size: 12.5px; }
+
+    .topRight{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+
+    .btn{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 10px 12px; border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--txt); text-decoration:none;
+      font-weight: 600; font-size: 13px;
+      transition: transform .18s ease;
+      user-select:none; -webkit-tap-highlight-color: transparent;
+      flex: 0 0 auto;
+      cursor:pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .card{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      max-width:100%;
+      overflow:hidden;
+    }
+
+    .layout{ display:grid; grid-template-columns: 1fr; gap: 14px; max-width:100%; }
+    @media(min-width: 860px){ .layout{ grid-template-columns: 1.15fr .85fr; gap: 16px; } }
+
+    .photo{
+      width:100%;
+      border-radius: 20px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+      box-shadow: 0 14px 34px rgba(0,0,0,.25);
+      max-width:100%;
+    }
+    .photo img{
+      width:100%;
+      display:block;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position:center;
+    }
+
+    .pTitle{
+      margin: 4px 0 0;
+      font-family:"Baloo 2", system-ui, sans-serif;
+      font-size: 26px;
+      line-height: 1.1;
+      word-break: break-word;
+    }
+
+    .row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px; flex-wrap: wrap; margin-top: 10px;
+      max-width:100%;
+    }
+
+    .price{ font-family:"Baloo 2", system-ui, sans-serif; font-size: 24px; }
+
+    .badge{
+      font-size: 12px; padding: 7px 10px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color: var(--muted);
+      max-width:100%;
+    }
+    .b-pronta{ color: rgba(120,255,210,.95); border-color: rgba(120,255,210,.22); }
+    .b-encom{ color: rgba(255,210,120,.95); border-color: rgba(255,210,120,.22); }
+    .b-esgot{ color: rgba(255,120,120,.95); border-color: rgba(255,120,120,.22); }
+
+    .infoLine{
+      margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.35;
+      max-width:100%;
+      overflow-wrap:anywhere;
+    }
+
+    .descBox{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.14);
+      border: 1px solid rgba(255,255,255,.10);
+      max-width:100%;
+      overflow-wrap:anywhere;
+    }
+    .descBox h4{
+      margin: 0 0 6px;
+      font-family:"Baloo 2", system-ui, sans-serif;
+      letter-spacing:.2px;
+    }
+    .descBox p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+      white-space: pre-line;
+      overflow-wrap:anywhere;
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      width:100%;
+      max-width:100%;
+    }
+    .btn2{
+      flex: 1 1 220px;
+      min-width: 160px;
+      display:inline-flex; align-items:center; justify-content:center; gap: 8px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.16);
+      color: var(--txt);
+      text-decoration:none;
+      font-weight: 800;
+      font-size: 13.5px;
+      user-select:none; -webkit-tap-highlight-color: transparent;
+      transition: transform .18s ease;
+      text-align:center;
+      max-width:100%;
+    }
+    .btn2:hover{ transform: translateY(-1px); }
+
+    .btnBuy{
+      background:#25D366;
+      color:#082014;
+      border-color: rgba(255,255,255,.35);
+    }
+    .btnGhost{ background: rgba(255,255,255,.08); }
+
+    .empty{
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.14);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      text-align:center;
+      max-width:100%;
+    }
+
+    .wafab{
+      position: fixed;
+      right: 16px; bottom: 16px;
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      display:grid; place-items:center;
+      background: #25D366;
+      color: #0b1a24;
+      text-decoration:none;
+      box-shadow: 0 16px 36px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.35);
+      font-size: 26px;
+      z-index: 999;
+      transition: transform .18s ease;
+    }
+    .wafab:hover{ transform: translateY(-2px); }
+
+    @media (max-width:520px){
+      .btn2{ flex: 1 1 100%; min-width: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brandLeft">
+        <img src="logo.png" class="logoSmall" alt="Rio Anime Shop">
+        <div class="titles">
+          <p class="title">Rio Anime Shop</p>
+          <p class="subtitle" id="topSub">Produto</p>
+        </div>
+      </div>
+
+      <div class="topRight">
+        <a class="btn" id="backBtn" href="catalogo.html">⬅️ Voltar</a>
+      </div>
+    </header>
+
+    <section class="card" id="content"></section>
+  </main>
+
+  <a class="wafab" id="waFab" href="#" aria-label="WhatsApp">💬</a>
+
+  <script>
+    // ====== CONFIG ======
+    const WHATSAPP_NUMBER = "5522988529894";
+    const STORE_NAME = "Rio Anime Shop";
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJeTQp2C9wH6o_JpEMzgv7SDRvDvJmdwuD_Vd2LvN17msa68cuYQJGDGgCNoOzSjLfVvTelJ_8WlEO/pub?output=csv";
+
+    const CAT_LABELS = {
+      camisas: "Camisas",
+      actionfigure: "Action Figure",
+      funkopop: "Funko Pop",
+      copos: "Copos",
+      canecas: "Canecas"
+    };
+
+    // ====== CACHE (mesmo do catálogo) ======
+    const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hora
+    function cacheKey(){
+      return "ras_csv_cache__" + btoa(CSV_URL).replace(/=+$/,"");
+    }
+    function readCache(){
+      try{
+        const raw = localStorage.getItem(cacheKey());
+        if(!raw) return null;
+        return JSON.parse(raw);
+      }catch(e){ return null; }
+    }
+    function writeCache(products){
+      try{
+        localStorage.setItem(cacheKey(), JSON.stringify({ ts: Date.now(), products }));
+      }catch(e){}
+    }
+
+    // ====== HELPERS ======
+    function normalizeDriveImage(url){
+      url = String(url || "").trim();
+      if(!url) return "";
+      if(url.includes("docs.google.com/spreadsheets")) return "";
+      if(url.includes("lh3.googleusercontent.com")) return url;
+
+      let m = url.match(/[?&]id=([^&]+)/);
+      if(m && m[1]) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+      m = url.match(/\/file\/d\/([^/]+)/);
+      if(m && m[1]) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+      if(/^[a-zA-Z0-9_-]{20,}$/.test(url)) return `https://lh3.googleusercontent.com/d/${url}`;
+      return url;
+    }
+
+    function shrinkImage(url, w=1200){
+      url = String(url || "");
+      if(!url) return url;
+      if(!url.includes("lh3.googleusercontent.com")) return url;
+      if(url.includes("=w") || url.includes("=s")) return url;
+      return url + `=w${w}`;
+    }
+
+    function parsePriceBR(raw){
+      let s = String(raw ?? "").trim();
+      if(!s) return NaN;
+      s = s.replace(/[^\d,.-]/g, "");
+      if(s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+      const n = Number(s);
+      return Number.isFinite(n) ? n : NaN;
+    }
+
+    function moneyBRL(v){
+      const num = Number(v);
+      if(!Number.isFinite(num)) return "Sob consulta";
+      return num.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    }
+
+    function parseCSV(text){
+      const rows = [];
+      let row = [];
+      let cur = "";
+      let inQuotes = false;
+
+      for(let i=0;i<text.length;i++){
+        const c = text[i];
+        const n = text[i+1];
+
+        if(c === '"' && inQuotes && n === '"'){ cur += '"'; i++; continue; }
+        if(c === '"'){ inQuotes = !inQuotes; continue; }
+
+        if(c === "," && !inQuotes){ row.push(cur); cur = ""; continue; }
+
+        if((c === "\n" || c === "\r") && !inQuotes){
+          if(c === "\r" && n === "\n"){ i++; }
+          row.push(cur); cur = "";
+          if(row.some(x => String(x).trim() !== "")) rows.push(row);
+          row = [];
+          continue;
+        }
+        cur += c;
+      }
+      row.push(cur);
+      if(row.some(x => String(x).trim() !== "")) rows.push(row);
+      return rows;
+    }
+
+    function slugCat(s){
+      return String(s || "")
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "");
+    }
+
+    function normStatus(s){
+      const t = String(s || "").toLowerCase().trim();
+      if(t.includes("pronta")) return "pronta";
+      if(t.includes("encom")) return "encomenda";
+      if(t.includes("esgot")) return "esgotado";
+      return "pronta";
+    }
+
+    function statusBadge(status){
+      if(status === "pronta") return `<span class="badge b-pronta">Pronta entrega</span>`;
+      if(status === "encomenda") return `<span class="badge b-encom">Encomenda</span>`;
+      return `<span class="badge b-esgot">Esgotado</span>`;
+    }
+
+    function buildBaseUrl(){
+      if(location.origin && location.origin !== "null"){
+        const dir = location.pathname.replace(/[^/]*$/, "");
+        return location.origin + dir;
+      }
+      return "";
+    }
+
+    function buildWhatsAppLink(p){
+      const base = buildBaseUrl();
+      const linkProduto = base ? `${base}produto.html?id=${encodeURIComponent(p.id)}` : "";
+
+      const msg =
+        `Olá! Vim pelo catálogo da ${STORE_NAME} 😄\n` +
+        `Tenho interesse no produto:\n` +
+        `• ${p.name}\n` +
+        `• ${moneyBRL(p.price)}\n` +
+        `• ID: ${p.id}\n` +
+        (linkProduto ? `Link: ${linkProduto}\n` : "") +
+        `Meu CEP é: ____\n` +
+        `Pode me informar frete e formas de pagamento?`;
+
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function idxAny(headers, names){
+      const lower = headers.map(h => String(h).trim().toLowerCase());
+      for(const nm of names){
+        const i = lower.indexOf(String(nm).toLowerCase());
+        if(i >= 0) return i;
+      }
+      return -1;
+    }
+
+    async function loadProductsFromSheet(){
+      const cached = readCache();
+      if(cached && cached.ts && Array.isArray(cached.products)){
+        const age = Date.now() - cached.ts;
+        if(age <= CACHE_TTL_MS){
+          return cached.products;
+        }
+      }
+
+      const res = await fetch(CSV_URL);
+      if(!res.ok) throw new Error("Falha ao carregar CSV");
+      const csv = await res.text();
+
+      const table = parseCSV(csv);
+      if(table.length < 2) return [];
+
+      const headers = table[0].map(h => String(h).trim());
+
+      const iID     = idxAny(headers, ["ID"]);
+      const iCat    = idxAny(headers, ["Categoria"]);
+      const iNome   = idxAny(headers, ["Nome"]);
+      const iPreco  = idxAny(headers, ["Preço","Preco"]);
+      const iStatus = idxAny(headers, ["Status"]);
+      const iEstoq  = idxAny(headers, ["Estoque"]);
+      const iFoto   = idxAny(headers, ["Foto_URL","Foto"]);
+      const iDesc   = idxAny(headers, ["Descrição","Descricao"]);
+
+      const out = [];
+      for(let r=1;r<table.length;r++){
+        const row = table[r];
+
+        const id = String(row[iID] ?? "").trim();
+        const name = String(row[iNome] ?? "").trim();
+        if(!id || !name) continue;
+
+        const cat = slugCat(row[iCat]);
+        const price = parsePriceBR(row[iPreco]);
+        const stock = Number(String(row[iEstoq] ?? "").replace(",", "."));
+
+        const rawPhoto = String(row[iFoto] ?? "").trim();
+        let photo = normalizeDriveImage(rawPhoto);
+        photo = shrinkImage(photo, 1200);
+
+        const status = normStatus(row[iStatus]);
+        const desc = String(row[iDesc] ?? "").trim();
+
+        out.push({ id, cat, name, price, status, stock: Number.isFinite(stock) ? stock : 0, photo, desc });
+      }
+
+      writeCache(out);
+      return out;
+    }
+
+    function safeText(s){
+      return String(s || "").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    }
+
+    // ====== UI ======
+    const qs = new URLSearchParams(location.search);
+    const id = (qs.get("id") || "").trim();
+    const catFromUrl = (qs.get("cat") || "").trim();
+    const qFromUrl = (qs.get("q") || "").trim();
+    const fFromUrl = (qs.get("f") || "").trim();
+    const isAdmin = qs.get("admin") === "1";
+
+    const content = document.getElementById("content");
+    const topSub = document.getElementById("topSub");
+    const backBtn = document.getElementById("backBtn");
+    const waFab = document.getElementById("waFab");
+
+    function buildBackHref(catSlug){
+      const params = new URLSearchParams();
+      if(catSlug) params.set("cat", catSlug);
+
+      if(qFromUrl) params.set("q", qFromUrl);
+      if(fFromUrl) params.set("f", fFromUrl);
+
+      if(isAdmin) params.set("admin","1");
+
+      const s = params.toString();
+      return s ? `catalogo.html?${s}` : "catalogo.html";
+    }
+
+    function renderNotFound(msg){
+      content.innerHTML = `<div class="empty">${msg}</div>`;
+      waFab.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Olá! Vim pelo catálogo da Rio Anime Shop 😄. Pode me ajudar?")}`;
+      backBtn.href = buildBackHref(catFromUrl);
+    }
+
+    function renderProduct(p){
+      const catLabel = CAT_LABELS[p.cat] || "Catálogo";
+      topSub.textContent = catLabel;
+
+      // ✅ volta preservando cat + q + f (+ admin se existir)
+      backBtn.href = buildBackHref(p.cat);
+
+      const wa = buildWhatsAppLink(p);
+      const fallback = `https://picsum.photos/seed/ras${encodeURIComponent(p.id)}/1200/900`;
+      const photo = (p.photo && !p.photo.includes("docs.google.com/spreadsheets")) ? p.photo : fallback;
+
+      const estoqueTxt = (p.status === "pronta") ? String(p.stock || 0) : "Sob consulta";
+
+      content.innerHTML = `
+        <div class="layout">
+          <div class="photo">
+            <img src="${photo}"
+                 loading="lazy"
+                 alt="${safeText(p.name)}"
+                 onerror="this.onerror=null;this.src='${fallback}';">
+          </div>
+
+          <div>
+            <h2 class="pTitle">${safeText(p.name)}</h2>
+
+            <div class="row">
+              <div class="price">${moneyBRL(p.price)}</div>
+              ${statusBadge(p.status)}
+            </div>
+
+            <div class="infoLine">
+              <strong>ID:</strong> ${safeText(p.id)}
+              &nbsp;•&nbsp;
+              <strong>Categoria:</strong> ${safeText(catLabel)}
+              &nbsp;•&nbsp;
+              <strong>Estoque:</strong> ${safeText(estoqueTxt)}
+            </div>
+
+            <div class="descBox">
+              <h4>Descrição</h4>
+              <p>${safeText(p.desc || "Peça mais fotos e detalhes no WhatsApp.")}</p>
+            </div>
+
+            <div class="actions">
+              <a class="btn2 btnBuy" href="${wa}" target="_blank" rel="noopener">🟢 Comprar no WhatsApp</a>
+              <a class="btn2 btnGhost" href="index.html">🏠 Menu</a>
+            </div>
+
+            <div class="infoLine" style="margin-top:10px;">
+              Dica: envie seu <strong>CEP</strong> para calcular frete e prazo.
+            </div>
+          </div>
+        </div>
+      `;
+
+      waFab.href = wa;
+    }
+
+    (async () => {
+      try{
+        if(!id){
+          renderNotFound("Produto não encontrado. Volte ao catálogo e selecione um item.");
+          return;
+        }
+
+        renderNotFound("Carregando produto...");
+
+        const products = await loadProductsFromSheet();
+        const p = products.find(x => String(x.id).toLowerCase() === id.toLowerCase());
+
+        if(!p){
+          renderNotFound("Produto não encontrado. Confira o ID ou volte ao catálogo.");
+          return;
+        }
+
+        renderProduct(p);
+      }catch(err){
+        console.error(err);
+        renderNotFound("Erro ao carregar a planilha. Tente novamente em instantes.");
+      }
+    })();
+  </script>
+</body>
+</html>
