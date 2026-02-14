@@ -322,10 +322,10 @@
     }
 
     function moneyBRL(v){
-      const num = Number(v);
-      if(!Number.isFinite(num)) return "Sob consulta";
-      return num.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-    }
+  const num = Number(v);
+  if(!Number.isFinite(num) || num <= 0) return "Consulte Nossos Preços";
+  return num.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+}
 
     function parseCSV(text){
       const rows = [];
@@ -393,7 +393,7 @@
         `Olá! Vim pelo catálogo da ${STORE_NAME} 😄\n` +
         `Tenho interesse no produto:\n` +
         `• ${p.name}\n` +
-        `• ${moneyBRL(p.price)}\n` +
+        `• Preço: ${moneyBRL(p.price)}\n` +
         `• ID: ${p.id}\n` +
         (linkProduto ? `Link: ${linkProduto}\n` : "") +
         `Pode me informar frete e formas de pagamento?`;

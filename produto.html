@@ -326,10 +326,11 @@
     }
 
     function moneyBRL(v){
-      const num = Number(v);
-      if(!Number.isFinite(num)) return "Sob consulta";
-      return num.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-    }
+  const num = Number(v);
+  if(!Number.isFinite(num) || num <= 0) return "Consulte Nossos Preços";
+  return num.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+}
+
 
     function parseCSV(text){
       const rows = [];
